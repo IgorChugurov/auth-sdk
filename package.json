@@ -1,6 +1,6 @@
 {
   "name": "auth-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Authentication SDK for Axon Dashboard - reusable auth module with Supabase",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
