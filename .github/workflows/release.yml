@@ -1,6 +1,9 @@
 name: Publish to npm
 
 on:
+  push:
+    tags:
+      - 'v*.*.*'  # Срабатывает при создании тега вида v0.1.0, v1.0.0 и т.д.
   release:
     types: [created]
   workflow_dispatch:
