@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/IgorChugurov/auth-sdk/compare/v1.0.2...v1.0.3) (2025-12-04)
+
+
+### Bug Fixes
+
+* исправлены пути экспорта в package.json для корректной работы импортов из подмодулей ([6554522](https://github.com/IgorChugurov/auth-sdk/commit/6554522c6a5c511e8fcff0421223b0608d257a5b))
+
 ## [1.0.2](https://github.com/IgorChugurov/auth-sdk/compare/v1.0.1...v1.0.2) (2025-12-04)
 
 
