@@ -1,5 +1,5 @@
 {
-  "name": "auth-sdk",
+  "name": "@igorchugurov/auth-sdk",
   "version": "1.0.1",
   "description": "Authentication SDK for Axon Dashboard - reusable auth module with Supabase",
   "main": "./dist/index.js",
