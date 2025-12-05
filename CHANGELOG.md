@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/IgorChugurov/auth-sdk/compare/v1.0.4...v1.0.5) (2025-12-05)
+
+
+### Bug Fixes
+
+* расширить peer dependencies для поддержки новых версий ([5a764a8](https://github.com/IgorChugurov/auth-sdk/commit/5a764a819a094347314d064d156d1cd81df62912))
+
 ## [1.0.4](https://github.com/IgorChugurov/auth-sdk/compare/v1.0.3...v1.0.4) (2025-12-05)
 
 ## [Unreleased]
