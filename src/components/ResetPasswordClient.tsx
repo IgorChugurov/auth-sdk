@@ -8,7 +8,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ResetPasswordForm, UpdatePasswordForm } from "./index";
-import { useAuth } from "../client/auth-provider";
 import { createBrowserSupabaseClient } from "../client/supabase-client";
 
 interface ResetPasswordClientProps {
@@ -43,9 +42,9 @@ export function ResetPasswordClient({
 }: ResetPasswordClientProps = {}) {
   const [error, setError] = useState<string | null>(null);
   const [isProcessingToken, setIsProcessingToken] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const searchParams = useSearchParams();
   const router = useRouter();
-  const { resetPassword, updatePassword, isLoading } = useAuth();
   const isProcessingRef = useRef(true);
 
   // Получаем URL и ключ Supabase из props или env переменных
@@ -280,29 +279,59 @@ export function ResetPasswordClient({
 
   const handleResetPassword = async (email: string) => {
     setError(null);
+    setIsLoading(true);
     try {
-      await resetPassword(email);
+      const supabase = createBrowserSupabaseClient(
+        supabaseUrlValue,
+        supabaseAnonKeyValue
+      );
+
+      const redirectTo =
+        typeof window !== "undefined"
+          ? `${window.location.origin}/auth/reset-password`
+          : "/auth/reset-password";
+
+      const { error: resetError } = await supabase.auth.resetPasswordForEmail(
+        email,
+        {
+          redirectTo,
+        }
+      );
+
+      if (resetError) {
+        throw new Error(resetError.message);
+      }
     } catch (err) {
       setError(
         err instanceof Error
           ? err.message
           : "Failed to send reset password email. Please try again."
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleUpdatePassword = async (password: string) => {
     setError(null);
+    setIsLoading(true);
     try {
-      await updatePassword(password);
-
-      // ВАЖНО: После успешного обновления пароля Supabase автоматически создает новую обычную сессию
-      // Recovery сессия превращается в обычную сессию с полными правами доступа
-      // Для безопасности мы делаем signOut, чтобы пользователь залогинился заново с новым паролем
       const supabase = createBrowserSupabaseClient(
         supabaseUrlValue,
         supabaseAnonKeyValue
       );
+
+      const { error: updateError } = await supabase.auth.updateUser({
+        password,
+      });
+
+      if (updateError) {
+        throw new Error(updateError.message);
+      }
+
+      // ВАЖНО: После успешного обновления пароля Supabase автоматически создает новую обычную сессию
+      // Recovery сессия превращается в обычную сессию с полными правами доступа
+      // Для безопасности мы делаем signOut, чтобы пользователь залогинился заново с новым паролем
 
       // Выходим из сессии (которая уже стала обычной после updatePassword)
       await supabase.auth.signOut();
@@ -323,22 +352,26 @@ export function ResetPasswordClient({
           ? err.message
           : "Failed to update password. Please try again."
       );
+    } finally {
+      setIsLoading(false);
     }
   };
 
   if (isProcessingToken) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-          <p className="text-muted-foreground">Processing reset link...</p>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">
+            Processing reset link...
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         {hasRecoveryToken ? (
           <UpdatePasswordForm
