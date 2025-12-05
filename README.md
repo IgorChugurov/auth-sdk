@@ -93,7 +93,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         <LoginForm
           onLogin={handleLogin}
@@ -238,6 +238,32 @@ const {
 - `isLoading?: boolean`
 - `providers?: OAuthProviderType[]` (по умолчанию `['google', 'github']`)
 
+#### `UpdatePasswordForm`
+
+Форма обновления пароля.
+
+**Пропсы:**
+- `onUpdatePassword: (password: string) => Promise<void>`
+- `isLoading?: boolean`
+- `error?: string | null`
+- `className?: string`
+
+### Стилизация компонентов
+
+Все UI компоненты используют семантические CSS-классы дизайн-системы вместо хардкодных цветов. Это обеспечивает лучшую поддержку темной темы и согласованность с дизайн-системой (например, shadcn/ui).
+
+**Используемые семантические классы:**
+- `text-foreground` - основной цвет текста
+- `text-muted-foreground` - приглушенный цвет текста
+- `bg-background` - цвет фона
+- `bg-card` - цвет карточек
+- `border-border` - цвет границ
+- `text-primary` / `bg-primary` - основные акцентные цвета
+- `text-destructive` / `bg-destructive` - цвета для ошибок
+- `text-primary-foreground` - цвет текста на основном фоне
+
+Для корректной работы компонентов необходимо настроить эти CSS-переменные в вашем проекте или использовать дизайн-систему, которая их предоставляет.
+
 ## 🔧 Типы
 
 ```typescript
@@ -315,7 +341,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-background py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full">
         <LoginForm
           onLogin={handleLogin}

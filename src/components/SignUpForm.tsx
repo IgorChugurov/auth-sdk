@@ -29,7 +29,9 @@ export function SignUpForm({
   loginLinkHref = "/login",
   className = "",
 }: SignUpFormProps) {
-  const [formData, setFormData] = useState<SignUpData & { confirmPassword: string }>({
+  const [formData, setFormData] = useState<
+    SignUpData & { confirmPassword: string }
+  >({
     email: "",
     password: "",
     confirmPassword: "",
@@ -84,15 +86,15 @@ export function SignUpForm({
   return (
     <div className={`space-y-8 ${className}`}>
       <div>
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-100">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-foreground">
           Create your account
         </h2>
         {showLoginLink && (
-          <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-center text-sm text-muted-foreground">
             Already have an account?{" "}
             <a
               href={loginLinkHref}
-              className="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400"
+              className="font-medium text-primary hover:text-primary/80"
             >
               Sign in
             </a>
@@ -102,17 +104,14 @@ export function SignUpForm({
 
       {showOAuth && (
         <>
-          <OAuthButtons
-            onOAuthClick={onOAuthSignUp}
-            isLoading={isLoading}
-          />
+          <OAuthButtons onOAuthClick={onOAuthSignUp} isLoading={isLoading} />
 
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 dark:border-gray-700" />
+              <div className="w-full border-t border-border" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-gray-50 dark:bg-gray-900 px-2 text-gray-500 dark:text-gray-400">
+              <span className="bg-background px-2 text-muted-foreground">
                 Or continue with
               </span>
             </div>
@@ -124,8 +123,8 @@ export function SignUpForm({
         <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 text-green-600 dark:text-green-400 px-4 py-3 rounded-md">
           <p className="font-medium">Check your email!</p>
           <p className="text-sm mt-1">
-            We&apos;ve sent you a confirmation link. Please check your email
-            and click the link to verify your account.
+            We&apos;ve sent you a confirmation link. Please check your email and
+            click the link to verify your account.
           </p>
         </div>
       ) : (
@@ -135,7 +134,7 @@ export function SignUpForm({
               <div>
                 <label
                   htmlFor="firstName"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  className="block text-sm font-medium text-foreground"
                 >
                   First Name
                 </label>
@@ -145,14 +144,14 @@ export function SignUpForm({
                   type="text"
                   value={formData.firstName}
                   onChange={handleInputChange("firstName")}
-                  className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-border bg-card px-3 py-2 text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                   placeholder="John"
                 />
               </div>
               <div>
                 <label
                   htmlFor="lastName"
-                  className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                  className="block text-sm font-medium text-foreground"
                 >
                   Last Name
                 </label>
@@ -162,7 +161,7 @@ export function SignUpForm({
                   type="text"
                   value={formData.lastName}
                   onChange={handleInputChange("lastName")}
-                  className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border border-border bg-card px-3 py-2 text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                   placeholder="Doe"
                 />
               </div>
@@ -171,7 +170,7 @@ export function SignUpForm({
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-foreground"
               >
                 Email address
               </label>
@@ -183,7 +182,7 @@ export function SignUpForm({
                 required
                 value={formData.email}
                 onChange={handleInputChange("email")}
-                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-border bg-card px-3 py-2 text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                 placeholder="you@example.com"
               />
             </div>
@@ -191,7 +190,7 @@ export function SignUpForm({
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-foreground"
               >
                 Password
               </label>
@@ -203,7 +202,7 @@ export function SignUpForm({
                 required
                 value={formData.password}
                 onChange={handleInputChange("password")}
-                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-border bg-card px-3 py-2 text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                 placeholder="At least 6 characters"
               />
             </div>
@@ -211,7 +210,7 @@ export function SignUpForm({
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+                className="block text-sm font-medium text-foreground"
               >
                 Confirm Password
               </label>
@@ -223,14 +222,14 @@ export function SignUpForm({
                 required
                 value={formData.confirmPassword}
                 onChange={handleInputChange("confirmPassword")}
-                className="mt-1 block w-full rounded-md border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 px-3 py-2 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                className="mt-1 block w-full rounded-md border border-border bg-card px-3 py-2 text-foreground placeholder-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary sm:text-sm"
                 placeholder="Confirm your password"
               />
             </div>
           </div>
 
           {displayError && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-600 dark:text-red-400 px-4 py-3 rounded-md">
+            <div className="bg-destructive/10 border border-destructive/50 text-destructive px-4 py-3 rounded-md">
               {displayError}
             </div>
           )}
@@ -239,7 +238,7 @@ export function SignUpForm({
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-primary-foreground bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? "Creating account..." : "Create account"}
             </button>
@@ -249,4 +248,3 @@ export function SignUpForm({
     </div>
   );
 }
-
