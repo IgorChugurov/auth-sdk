@@ -18,19 +18,19 @@ pnpm add @axon-dashboard/auth-sdk
 
 ```typescript
 // middleware.ts
-import { createAuthMiddleware } from '@axon-dashboard/auth-sdk/server';
+import { createAuthMiddleware } from "@axon-dashboard/auth-sdk/server";
 
 export const middleware = createAuthMiddleware({
   supabaseUrl: process.env.NEXT_PUBLIC_SUPABASE_URL!,
   supabaseAnonKey: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-  publicRoutes: ['/login', '/signup', '/auth/callback'],
+  publicRoutes: ["/login", "/signup", "/auth/callback"],
   onAuthRequired: ({ pathname }) => {
     return `/login?redirect=${encodeURIComponent(pathname)}`;
   },
   onRoleCheck: (user, role, { pathname }) => {
     // Редирект обычных пользователей на welcome страницу
-    if (role === 'user' && !pathname.startsWith('/welcome')) {
-      return '/welcome';
+    if (role === "user" && !pathname.startsWith("/welcome")) {
+      return "/welcome";
     }
     return null;
   },
@@ -38,7 +38,7 @@ export const middleware = createAuthMiddleware({
 });
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };
 ```
 
@@ -46,9 +46,13 @@ export const config = {
 
 ```typescript
 // app/layout.tsx или providers.tsx
-'use client';
+"use client";
 
-import { AuthProvider, createClientAuthClient, createBrowserSupabaseClient } from '@axon-dashboard/auth-sdk/client';
+import {
+  AuthProvider,
+  createClientAuthClient,
+  createBrowserSupabaseClient,
+} from "@axon-dashboard/auth-sdk/client";
 
 const authClient = createClientAuthClient(
   createBrowserSupabaseClient(
@@ -71,11 +75,11 @@ export function Providers({ children, initialUser }) {
 
 ```typescript
 // app/login/page.tsx
-'use client';
+"use client";
 
-import { LoginForm } from '@axon-dashboard/auth-sdk/components';
-import { useAuth } from '@axon-dashboard/auth-sdk/client';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { LoginForm } from "@axon-dashboard/auth-sdk/components";
+import { useAuth } from "@axon-dashboard/auth-sdk/client";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function LoginPage() {
   const { login, loginWithOAuth, isLoading } = useAuth();
@@ -85,7 +89,7 @@ export default function LoginPage() {
   const handleLogin = async (credentials) => {
     try {
       await login(credentials);
-      const redirect = searchParams.get('redirect') || '/';
+      const redirect = searchParams.get("redirect") || "/";
       router.push(redirect);
     } catch (error) {
       // Ошибка обрабатывается в LoginForm
@@ -115,8 +119,11 @@ export default function LoginPage() {
 Создает серверный клиент авторизации.
 
 ```typescript
-import { createServerAuthClient, createServerSupabaseClient } from '@axon-dashboard/auth-sdk/server';
-import { cookies } from 'next/headers';
+import {
+  createServerAuthClient,
+  createServerSupabaseClient,
+} from "@axon-dashboard/auth-sdk/server";
+import { cookies } from "next/headers";
 
 const cookieStore = await cookies();
 const supabase = createServerSupabaseClient(
@@ -141,6 +148,7 @@ const user = await authClient.getUser();
 Создает middleware функцию для Next.js.
 
 **Параметры:**
+
 - `supabaseUrl` - URL Supabase проекта
 - `supabaseAnonKey` - Anon ключ Supabase
 - `publicRoutes` - Массив публичных маршрутов (опционально)
@@ -155,7 +163,10 @@ const user = await authClient.getUser();
 Создает клиентский клиент авторизации.
 
 ```typescript
-import { createClientAuthClient, createBrowserSupabaseClient } from '@axon-dashboard/auth-sdk/client';
+import {
+  createClientAuthClient,
+  createBrowserSupabaseClient,
+} from "@axon-dashboard/auth-sdk/client";
 
 const supabase = createBrowserSupabaseClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -170,6 +181,7 @@ const authClient = createClientAuthClient(supabase, window.location.origin);
 React Provider для управления состоянием авторизации.
 
 **Пропсы:**
+
 - `authClient` - ClientAuthClient экземпляр
 - `initialUser` - Начальный пользователь (опционально)
 - `onSignOut` - Callback при выходе (опционально)
@@ -199,6 +211,7 @@ const {
 Форма входа с поддержкой email/password и OAuth.
 
 **Пропсы:**
+
 - `onLogin: (credentials: LoginCredentials) => Promise<void>`
 - `onOAuthLogin: (provider: OAuthProviderType) => Promise<void>`
 - `isLoading?: boolean`
@@ -212,6 +225,7 @@ const {
 Форма регистрации.
 
 **Пропсы:**
+
 - `onSignUp: (data: SignUpData) => Promise<void>`
 - `onOAuthSignUp: (provider: OAuthProviderType) => Promise<void>`
 - `isLoading?: boolean`
@@ -225,6 +239,7 @@ const {
 Форма сброса пароля.
 
 **Пропсы:**
+
 - `onResetPassword: (email: string) => Promise<void>`
 - `isLoading?: boolean`
 - `error?: string | null`
@@ -234,6 +249,7 @@ const {
 Кнопки OAuth провайдеров.
 
 **Пропсы:**
+
 - `onOAuthClick: (provider: OAuthProviderType) => Promise<void>`
 - `isLoading?: boolean`
 - `providers?: OAuthProviderType[]` (по умолчанию `['google', 'github']`)
@@ -243,6 +259,7 @@ const {
 Форма обновления пароля.
 
 **Пропсы:**
+
 - `onUpdatePassword: (password: string) => Promise<void>`
 - `isLoading?: boolean`
 - `error?: string | null`
@@ -253,6 +270,7 @@ const {
 Все UI компоненты используют семантические CSS-классы дизайн-системы вместо хардкодных цветов. Это обеспечивает лучшую поддержку темной темы и согласованность с дизайн-системой (например, shadcn/ui).
 
 **Используемые семантические классы:**
+
 - `text-foreground` - основной цвет текста
 - `text-muted-foreground` - приглушенный цвет текста
 - `bg-background` - цвет фона
@@ -267,7 +285,7 @@ const {
 ## 🔧 Типы
 
 ```typescript
-type UserRole = 'user' | 'admin' | 'superAdmin';
+type UserRole = "user" | "admin" | "superAdmin";
 
 interface User {
   id?: string;
@@ -292,7 +310,7 @@ interface SignUpData {
   lastName?: string;
 }
 
-type OAuthProviderType = 'google' | 'github';
+type OAuthProviderType = "google" | "github";
 ```
 
 ## 🎯 Примеры использования
@@ -300,12 +318,12 @@ type OAuthProviderType = 'google' | 'github';
 ### Полный пример страницы входа
 
 ```typescript
-'use client';
+"use client";
 
-import { LoginForm } from '@axon-dashboard/auth-sdk/components';
-import { useAuth } from '@axon-dashboard/auth-sdk/client';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { LoginForm } from "@axon-dashboard/auth-sdk/components";
+import { useAuth } from "@axon-dashboard/auth-sdk/client";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function LoginPage() {
   const { login, loginWithOAuth, isLoading } = useAuth();
@@ -314,9 +332,9 @@ export default function LoginPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const errorParam = searchParams.get('error');
-    if (errorParam === 'auth_failed') {
-      setError('Authentication failed. Please try again.');
+    const errorParam = searchParams.get("error");
+    if (errorParam === "auth_failed") {
+      setError("Authentication failed. Please try again.");
     }
   }, [searchParams]);
 
@@ -324,10 +342,10 @@ export default function LoginPage() {
     setError(null);
     try {
       await login(credentials);
-      const redirect = searchParams.get('redirect') || '/';
+      const redirect = searchParams.get("redirect") || "/";
       router.push(redirect);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Login failed');
+      setError(err instanceof Error ? err.message : "Login failed");
     }
   };
 
@@ -336,7 +354,7 @@ export default function LoginPage() {
     try {
       await loginWithOAuth(provider);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'OAuth login failed');
+      setError(err instanceof Error ? err.message : "OAuth login failed");
     }
   };
 
@@ -358,8 +376,11 @@ export default function LoginPage() {
 ### Использование серверного клиента в Server Components
 
 ```typescript
-import { createServerAuthClient, createServerSupabaseClient } from '@axon-dashboard/auth-sdk/server';
-import { cookies } from 'next/headers';
+import {
+  createServerAuthClient,
+  createServerSupabaseClient,
+} from "@axon-dashboard/auth-sdk/server";
+import { cookies } from "next/headers";
 
 export default async function ProfilePage() {
   const cookieStore = await cookies();
@@ -425,4 +446,3 @@ pnpm dev
 ## 📄 Лицензия
 
 MIT
-
