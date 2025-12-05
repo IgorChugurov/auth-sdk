@@ -1,3 +1,5 @@
+## [1.0.6](https://github.com/IgorChugurov/auth-sdk/compare/v1.0.5...v1.0.6) (2025-12-05)
+
 ## [1.0.5](https://github.com/IgorChugurov/auth-sdk/compare/v1.0.4...v1.0.5) (2025-12-05)
 
 ### Bug Fixes
