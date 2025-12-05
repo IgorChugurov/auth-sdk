@@ -1,3 +1,5 @@
+## [1.0.4](https://github.com/IgorChugurov/auth-sdk/compare/v1.0.3...v1.0.4) (2025-12-05)
+
 ## [Unreleased]
 
 ### Refactor
